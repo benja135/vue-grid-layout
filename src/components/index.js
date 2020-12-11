@@ -1,11 +1,13 @@
 import GridItem from './GridItem.vue';
 import GridLayout from './GridLayout.vue';
+import Resizable from './Resizable.vue';
 // import ResponsiveGridLayout from './ResponsiveGridLayout.vue';
 
 const VueGridLayout = {
     // ResponsiveGridLayout,
     GridLayout,
-    GridItem
+    GridItem,
+    Resizable
 }
 
 export function install(Vue) {
@@ -31,4 +33,4 @@ if (GlobalVue) {
 }
 
 export default VueGridLayout;
-export { GridLayout, GridItem };
+export { GridLayout, GridItem, Resizable };

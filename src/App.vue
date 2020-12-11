@@ -76,7 +76,7 @@
                            @moved="moved"
                 >
                     <!--<custom-drag-element :text="item.i"></custom-drag-element>-->
-                    <Resizable>
+                    <Resizable :row-height="rowHeight">
                             <test-element :text="item.i"></test-element>
                             <div v-show="item.i === '0'">
                                 <h1>Title</h1>
@@ -142,7 +142,7 @@
             GridItem,
             TestElement,
             CustomDragElement,
-                Resizable,
+            Resizable,
         },
         data () {
             return {

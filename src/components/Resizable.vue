@@ -7,14 +7,18 @@
 <script>
 export default {
     name: "Resizable",
-    props: {},
+    props: {
+        rowHeight : {
+            type: Number,
+            default: 30
+        }
+    },
 
     data: function() {
         return {
             clientHeight: 0,
             widgetHeight: 0,
-            gridItem: null,
-            rowHeight: 30
+            gridItem: null
         }
     },
 
