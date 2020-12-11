@@ -47,6 +47,7 @@
                     :prevent-collision="preventCollision"
                     :vertical-compact="true"
                     :use-css-transforms="true"
+                    :use-percent-width-beta="true"
                     :responsive="responsive"
                     @layout-created="layoutCreatedEvent"
                     @layout-before-mount="layoutBeforeMountEvent"
@@ -75,7 +76,16 @@
                            @moved="moved"
                 >
                     <!--<custom-drag-element :text="item.i"></custom-drag-element>-->
-                    <test-element :text="item.i"></test-element>
+                    <Resizable>
+                            <test-element :text="item.i"></test-element>
+                            <div v-show="item.i === '0'">
+                                <h1>Title</h1>
+                                <h2>Other title</h2>
+                                <p>Some text</p>
+                                <p>This text is visible thanks to Resizable component.</p>
+                            </div>
+                    </Resizable>
+
                     <!--<button @click="clicked">CLICK ME!</button>-->
                 </grid-item>
             </grid-layout>
@@ -110,6 +120,7 @@
 <script>
     import GridItem from './components/GridItem.vue';
     import GridLayout from './components/GridLayout.vue';
+    import Resizable from './components/Resizable.vue';
     // import ResponsiveGridLayout from './components/ResponsiveGridLayout.vue';
     import TestElement from './components/TestElement.vue';
     import CustomDragElement from './components/CustomDragElement.vue';
@@ -118,25 +129,10 @@
 
     let testLayout = [
         {"x":0,"y":0,"w":2,"h":2,"i":"0", resizable: true, draggable: true, static: false, minY: 0, maxY: 2},
-        {"x":2,"y":0,"w":2,"h":4,"i":"1", resizable: null, draggable: null, static: true},
-        {"x":4,"y":0,"w":2,"h":5,"i":"2", resizable: false, draggable: false, static: false, minX: 4, maxX: 4, minW: 2, maxW: 2},
-        {"x":6,"y":0,"w":2,"h":3,"i":"3", resizable: false, draggable: false, static: false},
-        {"x":8,"y":0,"w":2,"h":3,"i":"4", resizable: false, draggable: false, static: false},
-        {"x":10,"y":0,"w":2,"h":3,"i":"5", resizable: false, draggable: false, static: false},
-        {"x":0,"y":5,"w":2,"h":5,"i":"6", resizable: false, draggable: false, static: false},
-        {"x":2,"y":5,"w":2,"h":5,"i":"7", resizable: false, draggable: false, static: false},
-        {"x":4,"y":5,"w":2,"h":5,"i":"8", resizable: false, draggable: false, static: false},
-        {"x":6,"y":3,"w":2,"h":4,"i":"9", resizable: false, draggable: false, static: true},
-        {"x":8,"y":4,"w":2,"h":4,"i":"10", resizable: false, draggable: false, static: false},
-        {"x":10,"y":4,"w":2,"h":4,"i":"11", resizable: false, draggable: false, static: false, minY: 4},
-        {"x":0,"y":10,"w":2,"h":5,"i":"12", resizable: false, draggable: false, static: false},
-        {"x":2,"y":10,"w":2,"h":5,"i":"13", resizable: false, draggable: false, static: false},
-        {"x":4,"y":8,"w":2,"h":4,"i":"14", resizable: false, draggable: false, static: false},
-        {"x":6,"y":8,"w":2,"h":4,"i":"15", resizable: false, draggable: false, static: false},
-        {"x":8,"y":10,"w":2,"h":5,"i":"16", resizable: false, draggable: false, static: false},
-        {"x":10,"y":4,"w":2,"h":2,"i":"17", resizable: false, draggable: false, static: false},
-        {"x":0,"y":9,"w":2,"h":3,"i":"18", resizable: false, draggable: false, static: false},
-        {"x":2,"y":6,"w":2,"h":2,"i":"19", resizable: false, draggable: false, static: false}
+        {"x":0,"y":1,"w":2,"h":5,"i":"2", resizable: false, draggable: false, static: false, minX: 4, maxX: 4, minW: 2, maxW: 2},
+        {"x":0,"y":2,"w":1,"h":3,"i":"3", resizable: false, draggable: false, static: false},
+        {"x":1,"y":2,"w":1,"h":3,"i":"4", resizable: false, draggable: false, static: false},
+        {"x":0,"y":3,"w":1,"h":3,"i":"5", resizable: false, draggable: false, static: false}
     ];
 
     export default {
@@ -146,6 +142,7 @@
             GridItem,
             TestElement,
             CustomDragElement,
+                Resizable,
         },
         data () {
             return {
@@ -154,10 +151,10 @@
                 draggable: true,
                 resizable: true,
                 mirrored: false,
-                responsive: true,
+                responsive: false,
                 preventCollision: false,
                 rowHeight: 30,
-                colNum: 12,
+                colNum: 2,
                 index: 0,
                 marginX: 10,
                 marginY: 10,

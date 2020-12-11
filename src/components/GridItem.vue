@@ -86,7 +86,7 @@
     }
 </style>
 <script>
-    import {setTopLeft, setTopRight, setTransformRtl, setTransform} from '@/helpers/utils';
+    import {setTopLeft, setTopRight, setTransformRtl, setTransform, setTransformPercentWidth} from '@/helpers/utils';
     import {getControlPosition, createCoreData} from '@/helpers/draggableUtils';
     import {getColsFromBreakpoint} from '@/helpers/responsiveUtils';
     import {getDocumentDir} from "@/helpers/DOM";
@@ -209,6 +209,7 @@
                 draggable: null,
                 resizable: null,
                 useCssTransforms: true,
+                usePercentWidthBeta: false,
                 useStyleCursor: true,
 
                 isDragging: false,
@@ -324,6 +325,7 @@
                 this.resizable = this.isResizable;
             }
             this.useCssTransforms = this.layout.useCssTransforms;
+            this.usePercentWidthBeta = this.layout.usePercentWidthBeta;
             this.useStyleCursor = this.layout.useStyleCursor;
             this.createStyle();
         },
@@ -462,9 +464,14 @@
                 }
 
                 let style;
+                // /!\ use with care
+                if (this.usePercentWidthBeta) {
+                    let posPercent = this.calcPercent(this.innerX, this.innerW)
+                    style = setTransformPercentWidth(pos.top, posPercent.widthTranslation, posPercent.widthPercent, pos.height)
+                }
                 // CSS Transforms support (default)
-                if (this.useCssTransforms) {
-//                    Add rtl support
+                else if (this.useCssTransforms) {
+                    // Add rtl support
                     if (this.renderRtl) {
                         style = setTransformRtl(pos.top, pos.right, pos.width, pos.height);
                     } else {
@@ -472,7 +479,7 @@
                     }
 
                 } else { // top,left (slow)
-//                    Add rtl support
+                    // Add rtl support
                     if (this.renderRtl) {
                         style = setTopRight(pos.top, pos.right, pos.width, pos.height);
                     } else {
@@ -655,6 +662,14 @@
                     this.$emit("moved", this.i, pos.x, pos.y);
                 }
                 this.eventBus.$emit("dragEvent", event.type, this.i, pos.x, pos.y, this.innerH, this.innerW);
+            },
+            calcPercent: function(x, w) {
+                const colWidth = this.calcColWidth();
+                let marginPercent = this.margin[0] / this.containerWidth * 100
+                let widthPercent = colWidth * w / this.containerWidth * 100 + Math.max(0, w - 1) * marginPercent
+                let marginPercentForInner = this.margin[0] / (colWidth * w) * 100
+                let widthTranslation = 100 * (x/w) + marginPercentForInner * (x + 1)
+                return { widthPercent: widthPercent, widthTranslation: widthTranslation}
             },
             calcPosition: function (x, y, w, h) {
                 const colWidth = this.calcColWidth();

@@ -78,6 +78,10 @@
                 type: Boolean,
                 default: true
             },
+            usePercentWidthBeta: {
+                type: Boolean,
+                default: false
+            },
             verticalCompact: {
                 type: Boolean,
                 default: true

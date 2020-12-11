@@ -305,6 +305,20 @@ export function perc(num: number): string {
   return num * 100 + '%';
 }
 
+export function setTransformPercentWidth(top, left, width, height): Object {
+  const translate = "translate3d(" + left + "%," + top + "px, 0)";
+  return {
+    transform: translate,
+    WebkitTransform: translate,
+    MozTransform: translate,
+    msTransform: translate,
+    OTransform: translate,
+    width: width + "%",
+    height: height + "px",
+    position: 'absolute'
+  };
+}
+
 export function setTransform(top, left, width, height): Object {
   // Replace unitless items with px
   const translate = "translate3d(" + left + "px," + top + "px, 0)";
