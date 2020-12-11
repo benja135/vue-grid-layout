@@ -23,11 +23,8 @@ export default {
 
         const widgetHeight = this.$el.clientHeight
         const newHeight = Math.ceil((widgetHeight + this.gridItem.margin[1]) / (this.rowHeight+ this.gridItem.margin[1]))
-        console.log("Height: ", newHeight)
 
         if (widgetHeight !== this.widgetHeight) {
-
-
             this.widgetHeight = widgetHeight
 
             this.gridItem.eventBus.$emit(
